@@ -19,7 +19,7 @@ public class DiscountCalculator
 		if (Totalamt >= 5000)  //25% discount applied on 5000 and above
         {
 			DiscountAmt = (Totalamt * 25) / 100;
-			
+			DiscountTotalAmt = Totalamt - DiscountAmt;  
             
         }
         else if (Totalamt >= 4000) //20% discount applied on 4000 and above
