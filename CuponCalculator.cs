@@ -1,49 +1,60 @@
-﻿//using System;
-//using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿
+public class CouponCalculator : DiscountCalculator
+{ 
+    private const decimal HighBillLimit = 600;
+    private const int HighUnitLimit = 6;
+    private const decimal HighCoupon = 300;
 
-public class CuponCalculator : DiscountCalculator
-{
-	protected Decimal cupondiscount;
-    protected Decimal billamt;
-    protected Decimal totaldiscountamt;
+    private const decimal MediumBillLimit = 400;
+    private const int MediumUnitLimit = 4;
+    private const decimal MediumCoupon = 200;
 
+    private const decimal LowBillLimit = 200;
+    private const int LowUnitLimit = 2;
+    private const decimal LowCoupon = 100;
 
-    public CuponCalculator(string name, int age, int units, decimal Totalamt) : base(name, age, units, Totalamt)
-	{
-	}
-	public void calculatecupon()
-	{
-		if(DiscountTotalAmt>=600 && units >= 6) 
-		{
-           cupondiscount= 300;
-            Console.WriteLine("yayyy cupon applied of rs." + cupondiscount);
-        } else if (DiscountTotalAmt >= 400 && units >= 4)
+    private const decimal NoCoupon = 0;
+
+    public decimal CouponDiscount { get; private set; }
+    public decimal FinalBillAmount { get; private set; }
+    public decimal TotalSavings { get; private set; }
+
+    public void CalculateCoupon()
+    {
+        if (DiscountTotalAmount >= HighBillLimit && Units >= HighUnitLimit)
         {
-            cupondiscount = 200;
-            Console.WriteLine("yayyy cupon applied of rs." + cupondiscount);
-            
-        }else if (DiscountTotalAmt >= 200 && units >= 2)
+            CouponDiscount = HighCoupon;
+        }
+        else if (DiscountTotalAmount >= MediumBillLimit && Units >= MediumUnitLimit)
         {
-            cupondiscount =100;
-            Console.WriteLine("yayyy cupon applied of rs." + cupondiscount);
+            CouponDiscount = MediumCoupon;
+        }
+        else if (DiscountTotalAmount >= LowBillLimit && Units >= LowUnitLimit)
+        {
+            CouponDiscount = LowCoupon;
         }
         else
         {
-            cupondiscount = 0;
-            Console.WriteLine(" sorry!! There is no cupon avilable for you");
-
+            CouponDiscount = NoCoupon;
         }
 
-
-
+        if (CouponDiscount > 0)
+        {
+            Console.WriteLine($"Yayyy! Coupon applied of Rs.{CouponDiscount:F2}");
+        }
+        else
+        {
+            Console.WriteLine("Sorry!! There is no coupon available for you");
+        }
     }
-    public void finalbillamount()
+
+    public void CalculateFinalBill()
     {
-        billamt = DiscountTotalAmt - cupondiscount;
-        Console.WriteLine("The Final amount = " + billamt);
-        totaldiscountamt = Totalamt - billamt;
-
-        Console.WriteLine("Congraducations...!! Your total Savings : " + totaldiscountamt);
-
+        FinalBillAmount = DiscountTotalAmount - CouponDiscount;
+        TotalSavings = TotalAmount - FinalBillAmount;
+        Console.WriteLine("---------------------------------------------------------------------");
+        Console.WriteLine($"The Final amount = Rs.{FinalBillAmount:F2}");
+        Console.WriteLine($"Congratulations...!! Your total savings: Rs.{TotalSavings:F2}");
+        Console.Write("---------------------------------------------------------------------");
     }
 }

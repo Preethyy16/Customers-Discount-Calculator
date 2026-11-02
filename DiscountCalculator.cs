@@ -1,64 +1,56 @@
-﻿using System;
+﻿
+
+using System;
 
 public class DiscountCalculator
 {
-	protected int age, units;
-	protected string name;
-	protected Decimal Totalamt;
-	protected Decimal DiscountAmt=0;
-    protected Decimal DiscountTotalAmt = 0;
-    public DiscountCalculator(string name,int age,int units,decimal Totalamt)
-	{
-		this.name = name;
-		this.age = age;
-		this.units = units;
-		this.Totalamt = Totalamt;
-	}
-	public void CalculateDiscount()
-	{
-		if (Totalamt >= 5000)  //25% discount applied on 5000 and above
-        {
-			DiscountAmt = (Totalamt * 25) / 100;
-			DiscountTotalAmt = Totalamt - DiscountAmt;  
-            
-        }
-        else if (Totalamt >= 4000) //20% discount applied on 4000 and above
-        {
-            DiscountAmt = (Totalamt * 20) / 100;
-            
-            DiscountTotalAmt = Totalamt - DiscountAmt;
-            
-        }
-        else if (Totalamt >= 2000) //10% discount applied on 2000 and above
-        {
-            DiscountAmt = (Totalamt * 10) / 100;
-            DiscountTotalAmt = Totalamt - DiscountAmt;
-            
+    private const decimal HighLimit = 5000;
+    private const decimal MediumHighLimit = 4000;
+    private const decimal MediumLimit = 2000;
+    private const decimal LowLimit = 1000;
 
-        }
-        else if (Totalamt >= 1000) //5% discount applied on 1000 and above
-        {
-            DiscountAmt = (Totalamt * 5) / 100;
-            
-            DiscountTotalAmt = Totalamt - DiscountAmt;
-            
+    private const decimal HighDiscount = 25;
+    private const decimal MediumHighDiscount = 20;
+    private const decimal MediumDiscount = 10;
+    private const decimal LowDiscount = 5;
+    private const decimal DefaultDiscount = 2;
 
-        }
-		else
-		{
-			DiscountAmt = (Totalamt * 2) / 100; //2 % discount applied
+    private decimal totalAmount;
 
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public int Units { get; set; }
 
-            DiscountTotalAmt = Totalamt - DiscountAmt;
-            
-        }
-    }
-    public void printDiscount()
-        
+ 
+    public decimal TotalAmount { get; set; }
+    public decimal DiscountAmount { get; private set; }
+    public decimal DiscountTotalAmount { get; private set; }
+
+    public void CalculateDiscount()
     {
-        Console.WriteLine("The Discount amount for your purchase is: Rs." + DiscountAmt);
-        DiscountTotalAmt = Totalamt - DiscountAmt;
-        Console.WriteLine("After the Discount!! Your TOTAL AMOUNT will be Rs:" + DiscountTotalAmt);
+        decimal discountPercent = GetDiscountPercent();
 
+        DiscountAmount = (TotalAmount * discountPercent) / 100;
+        DiscountTotalAmount = TotalAmount - DiscountAmount;
+    }
+
+    private decimal GetDiscountPercent()
+    {
+        if (TotalAmount >= HighLimit)
+            return HighDiscount;
+        else if (TotalAmount >= MediumHighLimit)
+            return MediumHighDiscount;
+        else if (TotalAmount >= MediumLimit)
+            return MediumDiscount;
+        else if (TotalAmount >= LowLimit)
+            return LowDiscount;
+        else
+            return DefaultDiscount;
+    }
+
+    public void PrintDiscount()
+    {
+        Console.WriteLine($"The Discount amount for your purchase is: Rs.{DiscountAmount:F2}");
+        Console.WriteLine($"After the Discount!! Your TOTAL AMOUNT will be Rs.{DiscountTotalAmount:F2}");
     }
 }
