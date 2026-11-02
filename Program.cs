@@ -7,8 +7,3 @@ catch (Exception ex)
 {
     Console.WriteLine("Something went wrong: " + ex.Message);
 }
-
-
-
-
-

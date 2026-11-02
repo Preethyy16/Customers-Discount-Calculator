@@ -1,7 +1,4 @@
-﻿
-
-using System;
-
+﻿using System;
 public class DiscountCalculator
 {
     private const decimal HighLimit = 5000;
