@@ -1,5 +1,4 @@
 ﻿using System;
-
 public class PurchasePrinter
 {
     public void PrintSummary(string name, int age, int units, decimal totalAmount)
